@@ -21,7 +21,7 @@ class ReceitaResource extends JsonResource
             'data' => $this->data,
             'descricao' => $this->descricao,
             'medicamentos' => $this->medicamentos,
-            'consulta_id' => new ConsultaResource($this->whenLoaded('consulta'))
+            'consulta_id' => $this->consulta_id,
         ];
     }
 }
