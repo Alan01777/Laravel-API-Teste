@@ -24,7 +24,7 @@ class PacienteResource extends JsonResource
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
             'sexo' => $this->sexo,
-            'consultas' => ConsultaResource::collection($this->whenLoaded('consultas')),
+            'consultas' => $this->consultas,
         ];
     }
 }
