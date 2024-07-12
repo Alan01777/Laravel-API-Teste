@@ -17,6 +17,8 @@ class MedicoFactory extends Factory
     public function definition(): array
     {
         return [
+            'created_at' => $this->faker->dateTime(),
+            'updated_at' => $this->faker->dateTime(),
             'nome' => $this->faker->name,
             'email' => $this->faker->email,
             'telefone' => $this->faker->phoneNumber,

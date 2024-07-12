@@ -11,6 +11,11 @@ class Consulta extends Model
 {
     use HasFactory;
 
+    protected $cast = [
+        'created_at' => 'datetime',
+        'updated_at' => 'datetime',
+    ];
+
     protected $fillable = [
         'medico_id',
         'paciente_id',

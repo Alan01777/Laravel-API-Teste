@@ -14,15 +14,21 @@ class PagamentoSeeder extends Seeder
      */
     public function run(): void
     {
-        $consultas = Consulta::all();
+        Consulta::chunk(200, function ($consultas) {
+            $pagamentos = [];
 
-        foreach ($consultas as $consulta) {
-            $pago = random_int(0, 1);
-            $pago = $pago == 1 ? 'pago' : 'pendente';
-            Pagamento::factory()->create([
-                'consulta_id' => $consulta->id,
-                'status' => $pago
-            ]);
-        }
+            foreach ($consultas as $consulta) {
+                $pago = random_int(0, 1) == 1 ? 'pago' : 'pendente';
+                $pagamentos[] = Pagamento::factory()->make([
+                    'consulta_id' => $consulta->id,
+                    'status' => $pago
+                ])->toArray();
+            }
+
+            $chunks = collect($pagamentos)->chunk(1000);
+            $chunks->each(function ($chunk) {
+                Pagamento::insert($chunk->toArray());
+            });
+        });
     }
 }

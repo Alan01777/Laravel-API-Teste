@@ -17,6 +17,8 @@ class ConsultaFactory extends Factory
     public function definition(): array
     {
         return [
+            'created_at' => $this->faker->dateTime(),
+            'updated_at' => $this->faker->dateTime(),
             'data_agendamento' => $this->faker->dateTimeBetween('-1 month', '+1 month'),
             'data_consulta' => $this->faker->dateTimeBetween('now', '+1 month'),
             'motivo' => $this->faker->sentence,

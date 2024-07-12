@@ -17,6 +17,8 @@ class PagamentoFactory extends Factory
     public function definition(): array
     {
         return [
+            'created_at' => $this->faker->dateTime(),
+            'updated_at' => $this->faker->dateTime(),
             'valor' => $this->faker->randomFloat(2, 0, 1000),
             'forma_pagamento' => $this->faker->randomElement(['Dinheiro', 'Cartão de Crédito', 'Cartão de Débito']),
         ];

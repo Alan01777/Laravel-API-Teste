@@ -15,16 +15,27 @@ class ConsultaSeeder extends Seeder
      */
     public function run(): void
     {
-        $pacientes = Paciente::all();
         $medicos = Medico::all();
 
-        foreach ($pacientes as $paciente) {
+        Paciente::chunk(200, function ($pacientes) use ($medicos) {
+            $consultas = [];
+
+            foreach ($pacientes as $paciente) {
                 $medico = $medicos->random();
-                $consultasPaciente = random_int(0, 3);
-                Consulta::factory()->count($consultasPaciente)->create([
-                    'paciente_id' => $paciente->id,
-                    'medico_id' => $medico->id,
-                ]);
-        }
+                $consultasPaciente = random_int(1, 3);
+
+                for ($i = 0; $i < $consultasPaciente; $i++) {
+                    $consultas[] = Consulta::factory()->make([
+                        'paciente_id' => $paciente->id,
+                        'medico_id' => $medico->id,
+                    ])->toArray();
+                }
+            }
+
+            $chunks = collect($consultas)->chunk(1000);
+            $chunks->each(function ($chunk) {
+                Consulta::insert($chunk->toArray());
+            });
+        });
     }
 }

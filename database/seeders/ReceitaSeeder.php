@@ -14,12 +14,21 @@ class ReceitaSeeder extends Seeder
      */
     public function run(): void
     {
-        $consultas = Consulta::all();
+       Consulta::chunk(200, function ($consultas) {
+            $receitas = [];
 
-        foreach ($consultas as $consulta) {
-            Receita::factory()->create([
-                'consulta_id' => $consulta->id
-            ]);
-        }
+            foreach($consultas as $consulta){
+                $receitas[] = Receita::factory()->make([
+                    'consulta_id' => $consulta->id
+                ])->toArray();
+            }
+
+            $chunks = collect($receitas)->chunk(1000);
+            $chunks->each(function ($chunk) {
+                Receita::insert($chunk->toArray());
+            });
+       });
+
+
     }
 }
