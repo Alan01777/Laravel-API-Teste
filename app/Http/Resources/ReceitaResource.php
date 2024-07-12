@@ -14,14 +14,26 @@ class ReceitaResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
-            'id' => $this->id,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'data' => $this->data,
-            'descricao' => $this->descricao,
-            'medicamentos' => $this->medicamentos,
-            'consulta_id' => $this->consulta_id,
-        ];
+        if ($request->routeIs('receitas.index')) {
+            return [
+                'id' => $this->id,
+                'created_at' => $this->created_at,
+                'updated_at' => $this->updated_at,
+                'data' => $this->data,
+                'descricao' => $this->descricao,
+                'medicamentos' => $this->medicamentos,
+                'consulta_id' => $this->consulta_id,
+            ];
+        } else {
+            return [
+                'id' => $this->id,
+                'created_at' => $this->created_at,
+                'updated_at' => $this->updated_at,
+                'data' => $this->data,
+                'descricao' => $this->descricao,
+                'medicamentos' => $this->medicamentos,
+                'consulta' => $this->consulta,
+            ];
+        }
     }
 }

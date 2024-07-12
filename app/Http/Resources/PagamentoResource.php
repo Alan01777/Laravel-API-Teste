@@ -14,14 +14,26 @@ class PagamentoResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
-            'id' => $this->id,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'valor' => $this->valor,
-            'forma_pagamento' => $this->forma_pagamento,
-            'status' => $this->status,
-            'consulta' => $this->consulta,
-        ];
+        if ($request->routeIs('pagamentos.index')) {
+            return [
+                'id' => $this->id,
+                'created_at' => $this->created_at,
+                'updated_at' => $this->updated_at,
+                'valor' => $this->valor,
+                'forma_pagamento' => $this->forma_pagamento,
+                'status' => $this->status,
+                'consulta_id' => $this->consulta->id,
+            ];
+        } else {
+            return [
+                'id' => $this->id,
+                'created_at' => $this->created_at,
+                'updated_at' => $this->updated_at,
+                'valor' => $this->valor,
+                'forma_pagamento' => $this->forma_pagamento,
+                'status' => $this->status,
+                'consulta' => $this->consulta,
+            ];
+        }
     }
 }

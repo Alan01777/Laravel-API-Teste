@@ -14,17 +14,31 @@ class PacienteResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
-            'id' => $this->id,
-            'nome' => $this->nome,
-            'cpf' => $this->cpf,
-            'data_nascimento' => $this->data_nascimento,
-            'telefone' => $this->telefone,
-            'email' => $this->email,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'sexo' => $this->sexo,
-            'consultas' => $this->consultas,
-        ];
+        if ($request->routeIs('pacientes.index')) {
+            return [
+                'id' => $this->id,
+                'nome' => $this->nome,
+                'cpf' => $this->cpf,
+                'data_nascimento' => $this->data_nascimento,
+                'telefone' => $this->telefone,
+                'email' => $this->email,
+                'created_at' => $this->created_at,
+                'updated_at' => $this->updated_at,
+                'sexo' => $this->sexo,
+            ];
+        } else {
+            return [
+                'id' => $this->id,
+                'nome' => $this->nome,
+                'cpf' => $this->cpf,
+                'data_nascimento' => $this->data_nascimento,
+                'telefone' => $this->telefone,
+                'email' => $this->email,
+                'created_at' => $this->created_at,
+                'updated_at' => $this->updated_at,
+                'sexo' => $this->sexo,
+                'consultas' => $this->consultas,
+            ];
+        }
     }
 }

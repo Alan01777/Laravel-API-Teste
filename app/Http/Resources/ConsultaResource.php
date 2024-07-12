@@ -14,17 +14,26 @@ class ConsultaResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        return [
-            'id' => $this->id,
-            'data_agendamento' => $this->data_agendamento,
-            'data_consulta' => $this->data_consulta,
-
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
-            'motivo' => $this->motivo,
-            'observacoes' => $this->observacoes,
-            'medico' => $this->medico,
-            'paciente' => $this->paciente,
-        ];
+        if ($request->routeIs('consultas.index')){
+            return [
+                'id' => $this->id,
+                'data' => $this->data,
+                'hora' => $this->hora,
+                'medico' => $this->medico->nome,
+                'paciente' => $this->paciente->nome,
+                'created_at' => $this->created_at,
+                'updated_at' => $this->updated_at,
+            ];
+        }else {
+            return [
+                'id' => $this->id,
+                'data' => $this->data,
+                'hora' => $this->hora,
+                'medico' => $this->medico,
+                'paciente' => $this->paciente,
+                'created_at' => $this->created_at,
+                'updated_at' => $this->updated_at,
+            ];
+        }
     }
 }
