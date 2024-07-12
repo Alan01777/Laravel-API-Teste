@@ -15,7 +15,16 @@ class MedicoController extends Controller
      */
     public function index()
     {
-        return MedicoResource::collection(Medico::with('consultas')->get());
+        try {
+            $medicos = Medico::with('consultas')->paginate(100);
+
+            return MedicoResource::collection($medicos);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Erro ao buscar médicos',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**

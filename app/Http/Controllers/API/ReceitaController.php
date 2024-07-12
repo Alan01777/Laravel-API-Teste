@@ -15,7 +15,16 @@ class ReceitaController extends Controller
      */
     public function index()
     {
-        return ReceitaResource::collection(Receita::with('consulta')->get());
+        try {
+            $receitas = Receita::with('consulta')->paginate(100);
+
+            return ReceitaResource::collection($receitas);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Erro ao buscar receitas',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**

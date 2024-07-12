@@ -15,7 +15,16 @@ class PacienteController extends Controller
      */
     public function index()
     {
-        return PacienteResource::collection(Paciente::with('consultas')->get());
+        try {
+            $pacientes = Paciente::with('consultas')->paginate(100);
+
+            return PacienteResource::collection($pacientes);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Erro ao buscar pacientes',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**

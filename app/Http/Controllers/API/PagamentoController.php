@@ -15,7 +15,16 @@ class PagamentoController extends Controller
      */
     public function index()
     {
-        return PagamentoResource::collection(Pagamento::with('consulta')->get());
+        try {
+            $pagamentos = Pagamento::with('consulta')->paginate(100);
+
+            return PagamentoResource::collection($pagamentos);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Erro ao buscar pagamentos',
+                'error' => $e->getMessage()
+            ], 500);
+        }
     }
 
     /**

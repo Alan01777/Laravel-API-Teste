@@ -15,7 +15,16 @@ class ConsultaController extends Controller
      */
     public function index()
     {
-        return ConsultaResource::collection(Consulta::with('medico', 'paciente')->get());
+        try {
+            $Consulta = Consulta::with('medico', 'paciente')->paginate(100);
+
+            return ConsultaResource::collection($Consulta);
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Erro ao buscar consultas',
+                'error' => $e->getMessage()
+            ], 500);
+        };
     }
 
 
