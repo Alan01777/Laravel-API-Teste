@@ -10,13 +10,17 @@ services:
       volumes:
         - ./:/var/www
         - ./nginx/conf.d/:/etc/nginx/conf.d/
+        - ./certbot/www:/var/www/certbot/:ro
       networks:
         - app-network
 
+  # certbot:
+  #   image: certbot/certbot:latest
+  #   volumes:
+  #     - ./certbot/www/:/var/www/certbot/:rw
+
   app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: alan01777/teste-api:v1
     container_name: app
     restart: always
     volumes:
@@ -24,22 +28,22 @@ services:
     networks:
       - app-network
 
-  db:
-    image: postgres:12.19-alpine
-    container_name: database
-    restart: always
-    environment:
-      POSTGRES_USER: ${DB_USERNAME}
-      POSTGRES_PASSWORD: ${DB_PASSWORD}
-      POSTGRES_DB: ${DB_DATABASE}
-    volumes:
-      - dbdata:/var/lib/postgresql/data
-    networks:
-      - app-network
+  # db:
+  #   image: postgres:12.19-alpine
+  #   container_name: database
+  #   restart: always
+  #   environment:
+  #     POSTGRES_USER: ${DB_USERNAME}
+  #     POSTGRES_PASSWORD: ${DB_PASSWORD}
+  #     POSTGRES_DB: ${DB_DATABASE}
+  #   volumes:
+  #     - dbdata:/var/lib/postgresql/data
+  #   networks:
+  #     - app-network
 
 networks:
   app-network:
     driver: bridge
-volumes:
-  dbdata:
-    driver: local
+# volumes:
+#   dbdata:
+#     driver: local
