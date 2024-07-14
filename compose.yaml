@@ -16,7 +16,7 @@ services:
 
 
   app:
-    image: alan01777/laravelapi:af8e05c
+    image: alan01777/sistema-consultas-medicas:latest
     container_name: app
     restart: always
     env_file:

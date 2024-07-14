@@ -39,7 +39,7 @@ jobs:
       - name: Run SlimToolKit
         shell: bash
         run: |
-          slim build --target alan01777/sistema-consultas-medicas:${{ steps.sha.outputs.sha }} --tag alan01777/sistema-consultas-medicas:slim-${{ steps.sha.outputs.sha }} --http-probe-off true
+          slim build --target alan01777/sistema-consultas-medicas:${{ steps.sha.outputs.sha }} --tag alan01777/sistema-consultas-medicas:slim-${{ steps.sha.outputs.sha }} --include-path /usr/local/etc/ --http-probe-off true
 
       # Push to the registry
       - name: Tag and Push
