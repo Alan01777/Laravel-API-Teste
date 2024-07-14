@@ -25,23 +25,26 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
 
-      - name: Build and Push
+      - name: Build Docker Image
         uses: docker/build-push-action@v6
         with:
           push: false
-          tags: alan01777/laravelapi:start
+          tags: alan01777/sistema-consultas-medicas:${{ steps.sha.outputs.sha }}
 
-      - uses: kitabisa/docker-slim-action@v1.1.1
-        env:
-          DSLIM_HTTP_PROBE: false
-        with:
-          target: alan01777/laravelapi:start
-          tag: "${{ steps.sha.outputs.sha }}"
+      - name: Get SlimToolKit
+        shell: bash
+        run: |
+          curl -sL https://raw.githubusercontent.com/slimtoolkit/slim/master/scripts/install-slim.sh | sudo -E bash -
+
+      - name: Run SlimToolKit
+        shell: bash
+        run: |
+          slim build --target alan01777/sistema-consultas-medicas:${{ steps.sha.outputs.sha }} --tag alan01777/sistema-consultas-medicas:slim-${{ steps.sha.outputs.sha }} --http-probe-off true
 
       # Push to the registry
       - name: Tag and Push
         run: |
-          docker image push alan01777/laravelapi:${{ steps.sha.outputs.sha }}
-          docker tag alan01777/laravelapi:${{ steps.sha.outputs.sha }} alan01777/laravelapi:latest
-          docker image push alan01777/laravelapi:latest
+          docker tag alan01777/sistema-consultas-medicas:${{ steps.sha.outputs.sha }} alan01777/sistema-consultas-medicas:latest
+          docker tag alan01777/sistema-consultas-medicas:slim-${{ steps.sha.outputs.sha }} alan01777/sistema-consultas-medicas:slim-latest
+          docker push alan01777/sistema-consultas-medicas --all-tags
 

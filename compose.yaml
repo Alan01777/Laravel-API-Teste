@@ -16,7 +16,7 @@ services:
 
 
   app:
-    image: alan01777/laravelapi:latest
+    image: alan01777/laravelapi:af8e05c
     container_name: app
     restart: always
     env_file:
