@@ -39,5 +39,9 @@ jobs:
           tag: "${{ steps.sha.outputs.sha }}"
 
       # Push to the registry
-      - run: docker image push "teste-api" --all-tags
+      - name: Tag and Push
+        run: |
+          docker image push alan01777/laravelapi:${{ steps.sha.outputs.sha }}
+          docker tag alan01777/laravelapi:${{ steps.sha.outputs.sha }} alan01777/laravelapi:latest
+          docker image push alan01777/laravelapi:latest
 
