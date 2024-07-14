@@ -5,7 +5,6 @@ on:
     branches:
       - main
 
-
 jobs:
   Build-and-push:
     name: Build and Push Image
@@ -39,7 +38,7 @@ jobs:
       - name: Run SlimToolKit
         shell: bash
         run: |
-          slim build --target alan01777/sistema-consultas-medicas:${{ steps.sha.outputs.sha }} --tag alan01777/sistema-consultas-medicas:slim-${{ steps.sha.outputs.sha }} --http-probe-off true
+          slim build --preserve-path-file ignore.txt --target alan01777/sistema-consultas-medicas:${{ steps.sha.outputs.sha }} --tag alan01777/sistema-consultas-medicas:slim-${{ steps.sha.outputs.sha }} --http-probe-off true
 
       # Push to the registry
       - name: Tag and Push
@@ -47,4 +46,3 @@ jobs:
           docker tag alan01777/sistema-consultas-medicas:${{ steps.sha.outputs.sha }} alan01777/sistema-consultas-medicas:latest
           docker tag alan01777/sistema-consultas-medicas:slim-${{ steps.sha.outputs.sha }} alan01777/sistema-consultas-medicas:slim-latest
           docker push alan01777/sistema-consultas-medicas --all-tags
-
