@@ -20,9 +20,11 @@ services:
   #     - ./certbot/www/:/var/www/certbot/:rw
 
   app:
-    image: alan01777/teste-api:v1
+    image: alan01777/slim:v1
     container_name: app
     restart: always
+    env_file:
+      - .env
     volumes:
       - .:/var/www
     networks:

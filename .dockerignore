@@ -1,34 +1,29 @@
-bootstrap/cache/services.php
+### User-specific stuff:
+/.git*
+/.idea/workspace.xml
+.dockerignore
 
-storage/app/*
-storage/framework/cache/*
-storage/framework/sessions/*
-storage/framework/views/*
-storage/logs/*
+### Other data
+storage/mysql-data
+vendor/
+bootstrap/cache
+!bootstrap/cache/.gitignore
+.phpstorm.meta.php
+_ide_helper.php
 
-vendor/**/test*
-vendor/**/tests*
-vendor/**/Tests*
+### Vendor bin dependencies
+/tools/*/vendor/
+.phpunit.cache
+.phpunit.result.cache
 
-**/*node_modules
-
-**.git
-.idea
-**.gitignore
-**.gitattributes
-**.sass-cache
-*.env*
-#composer.json
-
-*.config.js
-?ulpfile.js
-?untfile.js
-package.json
-phpunit.xml
-readme.md
-phpspec.yml
-
+### Docker
 Dockerfile
-docker-compose.yml
-run
-run.ps1
+compose.yaml
+compose-test-ci.yaml
+compose-staging.yaml
+compose-prod.yaml
+nginx/
+certbot/
+
+### Girhub Actions
+.github/
