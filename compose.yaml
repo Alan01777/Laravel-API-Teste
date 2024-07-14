@@ -16,7 +16,7 @@ services:
 
 
   app:
-    image: alan01777/sistema-consultas-medicas:latest
+    image: alan01777/sistema-consultas-medicas:slim-28625b4
     container_name: app
     restart: always
     env_file:
