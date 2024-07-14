@@ -29,14 +29,14 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: false
-          tags: initial:${{ steps.sha.outputs.sha }}
+          tags: alan01777/laravelapi:start
 
       - uses: kitabisa/docker-slim-action@v1
         env:
           DSLIM_HTTP_PROBE: false
         with:
-          target: initial:${{ steps.sha.outputs.sha }}
-          tag: "alan01777/testeapi:v${{ steps.sha.outputs.sha }}"
+          target: alan01777/laravelapi:start
+          tag: "${{ steps.sha.outputs.sha }}"
 
       # Push to the registry
       - run: docker image push "teste-api" --all-tags
