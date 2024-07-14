@@ -37,15 +37,13 @@ jobs:
           target: alan01777/sistema-consultas-medicas:${{ steps.sha.outputs.sha }}
           tag: "slim-${{ steps.sha.outputs.sha }}"
 
-      - name: Tag Latest
-        run: |
-          docker tag alan01777/sistema-consultas-medicas:${{ steps.sha.outputs.sha }} alan01777/sistema-consultas-medicas:latest
-          docker tag alan01777/sistema-consultas-medicas:slim-${{ steps.sha.outputs.sha }} alan01777/sistema-consultas-medicas:slim-latest
-
       - name: Inspect Image Sizes
         run: |
           docker images alan01777/sistema-consultas-medicas:${{ steps.sha.outputs.sha }}
           docker images alan01777/sistema-consultas-medicas:slim-${{ steps.sha.outputs.sha }}
+
+      - name: Tag latest Original
+        run: docker tag alan01777/sistema-consultas-medicas:${{ steps.sha.outputs.sha }} alan01777/sistema-consultas-medicas:latest
 
       - name: Push Original Docker Image
         uses: docker/build-push-action@v6
@@ -54,6 +52,9 @@ jobs:
           tags: |
             alan01777/sistema-consultas-medicas:${{ steps.sha.outputs.sha }}
             alan01777/sistema-consultas-medicas:latest
+
+      - name: Tag latest Slimmed
+        run: docker tag alan01777/sistema-consultas-medicas:slim-${{ steps.sha.outputs.sha }} alan01777/sistema-consultas-medicas:slim-latest
 
       - name: Push Slimmed Docker Image
         uses: docker/build-push-action@v6
