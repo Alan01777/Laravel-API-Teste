@@ -35,7 +35,7 @@ jobs:
         env:
           DSLIM_HTTP_PROBE: false
         with:
-          target: inital:${{ steps.sha.outputs.sha }}
+          target: initial:${{ steps.sha.outputs.sha }}
           tag: "alan01777/testeapi:v${{ steps.sha.outputs.sha }}"
 
       # Push to the registry
