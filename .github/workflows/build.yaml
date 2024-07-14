@@ -46,7 +46,8 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: true
-          tags: alan01777/sistema-consultas-medicas:${{ steps.sha.outputs.sha }}
-          tags: alan01777/sistema-consultas-medicas:slim-${{ steps.sha.outputs.sha }}
-          tags: alan01777/sistema-consultas-medicas:latest
-          tags: alan01777/sistema-consultas-medicas:slim-latest
+          tags: |
+            alan01777/sistema-consultas-medicas:${{ steps.sha.outputs.sha }}
+            alan01777/sistema-consultas-medicas:slim-${{ steps.sha.outputs.sha }}
+            alan01777/sistema-consultas-medicas:latest
+            alan01777/sistema-consultas-medicas:slim-latest
