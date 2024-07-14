@@ -21,8 +21,10 @@ RUN apk add --no-cache \
     libzip-dev \
     postgresql-dev && \
     docker-php-ext-install pdo pdo_pgsql zip && \
-    rm -rf /var/cache/apk/*
-
+    rm -rf /var/cache/apk/* && \
+    addgroup -g 1000 www && \
+    adduser -u 1000 -S www -G www && \
+    chown -R www:www /var/www
 
 EXPOSE 9000
 CMD ["php-fpm"]
