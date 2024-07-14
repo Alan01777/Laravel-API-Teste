@@ -19,27 +19,29 @@ jobs:
         id: sha
         run: echo "::set-output name=sha::$(echo $GITHUB_SHA | cut -c1-7)"
 
-      # Build the Docker image first
-      - uses: docker/build-push-action@v4
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build and Push
+        uses: docker/build-push-action@v6
         with:
           push: false
-          tags: alan01777/testeapi:${{ steps.sha.outputs.sha }}
+          tags: alan01777/laravelapi:start
 
-      # Slim the Image
-      - uses: kitabisa/docker-slim-action@v1
+      - uses: kitabisa/docker-slim-action@v1.1.1
         env:
           DSLIM_HTTP_PROBE: false
         with:
-          target: alan01777/testeapi:${{ steps.sha.outputs.sha }}}
-          tag: "slim-${{ steps.sha.outputs.sha }}"
-
-      # Docker Hub Login
-      - uses: docker/login-action@v4
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
+          target: alan01777/laravelapi:start
+          tag: "${{ steps.sha.outputs.sha }}"
 
       # Push to the registry
-      - run: |
-        docker tag alan01777/testeapi:slim-${{ steps.sha.outputs.sha }}} ${{ secrets.DOCKERHUB_USERNAME }}/alan01777/testeapi:slim-${{ steps.sha.outputs.sha }}}
-        docker push ${{ secrets.DOCKERHUB_USERNAME }}/alan01777/testeapi:slim-${{ steps.sha.outputs.sha }}}
+      - name: Tag and Push
+        run: |
+          docker image push alan01777/laravelapi:${{ steps.sha.outputs.sha }}
+          docker tag alan01777/laravelapi:${{ steps.sha.outputs.sha }} alan01777/laravelapi:latest
+          docker image push alan01777/laravelapi:latest
+
