@@ -14,10 +14,6 @@ services:
       networks:
         - app-network
 
-  # certbot:
-  #   image: certbot/certbot:latest
-  #   volumes:
-  #     - ./certbot/www/:/var/www/certbot/:rw
 
   app:
     image: alan01777/laravelapi:latest
