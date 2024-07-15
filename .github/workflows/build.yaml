@@ -41,11 +41,8 @@ jobs:
       - name: Tag Latest
         run: docker tag alan01777/sistema-consultas-medicas:${{ env.short_sha }} alan01777/sistema-consultas-medicas:latest
 
-      - name: Push Image
-        uses: docker/build-push-action@v6
-        with:
-          push: true
-          tags: |
-            alan01777/sistema-consultas-medicas:${{ env.short_sha }}
-            alan01777/sistema-consultas-medicas:latest
+      - name: Push Images
+        run: |
+          docker push alan01777/sistema-consultas-medicas:${{ env.short_sha }}
+          docker push alan01777/sistema-consultas-medicas:latest
 
