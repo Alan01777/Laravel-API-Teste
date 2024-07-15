@@ -32,7 +32,7 @@ jobs:
 
       - name: Install squash
         run: |
-          apt install pipx
+          sudo apt install pipx
           pipx install docker-squash
 
       - name: Squash Image
