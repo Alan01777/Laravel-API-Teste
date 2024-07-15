@@ -24,10 +24,9 @@ RUN apk add --no-cache \
     rm -rf /var/cache/apk/* && \
     addgroup -g 1000 www-data && \
     adduser -u 1000 -S www-data -G www-data && \
-    chown -R www:www /var/www && \
-    php-fpm -R
+    chown -R www:www /var/www
 
 USER www-data
 
 EXPOSE 9000
-CMD ["php-fpm"]
+CMD ["php-fpm", "-R"]
