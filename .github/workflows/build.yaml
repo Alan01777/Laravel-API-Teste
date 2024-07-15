@@ -28,7 +28,15 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           push: false
-          tags: alan01777/sistema-consultas-medicas:${{ env.short_sha }}
+          tags: initial:${{ env.short_sha }}
+
+      - name: Install squash
+        run: |
+          apt install pipx
+          pipx install docker-squash
+
+      - name: Squash Image
+        run: docker-squash -t alan01777/sistema-consultas-medicas:${{ env.short_sha }} initial:${{ env.short_sha }}
 
       - name: Tag Latest
         run: docker tag alan01777/sistema-consultas-medicas:${{ env.short_sha }} alan01777/sistema-consultas-medicas:latest
