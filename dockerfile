@@ -4,7 +4,7 @@ WORKDIR /var/www
 
 COPY composer.lock composer.json /var/www/
 
-RUN composer install --no-dev --no-scripts --no-autoloader
+RUN composer install --no-dev --no-scripts
 
 FROM php:8.3-fpm-alpine AS runner
 
@@ -15,8 +15,6 @@ COPY --from=build /var/www/vendor /var/www/vendor
 # Copy application files
 COPY . /var/www
 
-# Generate autoloader
-RUN composer dump-autoload --optimize
 
 # Install dependencies and clean up in the same layer
 RUN apk add --no-cache \
