@@ -30,30 +30,14 @@ jobs:
           push: false
           tags: alan01777/sistema-consultas-medicas:${{ env.short_sha }}
 
-      - name: Slim Image
-        uses: kitabisa/docker-slim-action@v1
-        env:
-          DSLIM_HTTP_PROBE: false
+      - name: Tag Latest
+        run: docker tag alan01777/sistema-consultas-medicas:${{ env.short_sha }} alan01777/sistema-consultas-medicas:latest
+
+      - name: Push Image
+        uses: docker/build-push-action@v6
         with:
-          target: alan01777/sistema-consultas-medicas:${{ env.short_sha }}
-          tag: slim-${{ env.short_sha }}
-
-      - name: Inspect Image Sizes
-        run: |
-          docker images alan01777/sistema-consultas-medicas:${{ env.short_sha }}
-          docker images alan01777/sistema-consultas-medicas:slim-${{ env.short_sha }}
-
-      - name: Push SHA image
-        run: |
-
-          docker push alan01777/sistema-consultas-medicas:${{ env.short_sha }}
-          docker push alan01777/sistema-consultas-medicas:slim-${{ env.short_sha }}
-
-
-      - name: Tag and Push Latest Image
-        run: |
-          docker tag alan01777/sistema-consultas-medicas:slim-${{ env.short_sha }} alan01777/sistema-consultas-medicas:slim-latest
-          docker tag alan01777/sistema-consultas-medicas:${{ env.short_sha }} alan01777/sistema-consultas-medicas:latest
-          docker push alan01777/sistema-consultas-medicas:slim-latest
-          docker push alan01777/sistema-consultas-medicas:latest
+          push: true
+          tags: |
+            alan01777/sistema-consultas-medicas:${{ env.short_sha }}
+            alan01777/sistema-consultas-medicas:latest
 
