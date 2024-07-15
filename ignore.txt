@@ -1,5 +1,0 @@
-/var/www
-/usr/local/bin/
-/usr/lib/php*/
-/etc/php*/
-/var/run/
