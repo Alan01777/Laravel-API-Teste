@@ -26,6 +26,17 @@ services:
     networks:
       - app-network
 
+  redis:
+    image: redis:7.4-rc2-alpine3.20
+    container_name: redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis:/data
+    networks:
+      - app-network
+
   # db:
   #   image: postgres:12.19-alpine
   #   container_name: database
@@ -42,6 +53,8 @@ services:
 networks:
   app-network:
     driver: bridge
-# volumes:
+volumes:
+  redis:
+    driver: local
 #   dbdata:
 #     driver: local
