@@ -4,43 +4,36 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ConsultaRequest;
-use Illuminate\Http\Request;
-use App\Http\Resources\ConsultaResource;
-use App\Models\Consulta;
+use App\Services\ConsultaService;
 
 class ConsultaController extends Controller
 {
-    public function index()
+    public function index(ConsultaService $consultaService)
     {
-        $consultas = Consulta::with('medico', 'paciente')->paginate(10);
-        return ConsultaResource::collection($consultas);
+        return $consultaService->index();
     }
 
-    public function store(ConsultaRequest $request)
+   
+    public function store(ConsultaRequest $request, ConsultaService $consultaService)
     {
-        $data = $request->validated();
-        $consulta = Consulta::create($data);
-        return new ConsultaResource($consulta);
+        return $consultaService->store($request);
     }
 
-    public function show($id)
+    
+    public function show(ConsultaService $consultaService, int $id)
     {
-        $consulta = Consulta::with('medico', 'paciente')->find($id);
-        return new ConsultaResource($consulta);
+        return $consultaService->show($id);
     }
 
-    public function update(ConsultaRequest $request, $id)
+    
+    public function update(ConsultaRequest $request, ConsultaService $consultaService, int $id)
     {
-        $data = $request->validated();
-        $consulta = Consulta::find($id);
-        $consulta->update($data);
-        return new ConsultaResource($consulta);
+        return $consultaService->update($request, $id);
     }
 
-    public function destroy($id)
+    
+    public function destroy(int $id, ConsultaService $consultaService)
     {
-        $consulta = Consulta::find($id);
-        $consulta->delete();
-        return response()->json(null, 204);
+        return $consultaService->destroy($id);
     }
 }

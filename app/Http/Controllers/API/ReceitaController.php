@@ -3,44 +3,37 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
-use App\Models\Receita;
-use App\Http\Resources\ReceitaResource;
 use App\Http\Requests\ReceitaRequest;
+use App\Services\ReceitaService;
 
 class ReceitaController extends Controller
 {
-    public function index()
+    public function index(ReceitaService $receitaService)
     {
-        $receitas = Receita::with('consulta')->paginate(10);
-        return ReceitaResource::collection($receitas);
+        return $receitaService->index();
     }
 
-    public function store(ReceitaRequest $request)
+   
+    public function store(ReceitaRequest $request, ReceitaService $receitaService)
     {
-        $data = $request->validated();
-        $receita = Receita::create($data);
-        return new ReceitaResource($receita);
+        return $receitaService->store($request);
     }
 
-    public function show($id)
+    
+    public function show(ReceitaService $receitaService, int $id)
     {
-        $receita = Receita::with('consulta')->find($id);
-        return new ReceitaResource($receita);
+        return $receitaService->show($id);
     }
 
-    public function update(ReceitaRequest $request, $id)
+    
+    public function update(ReceitaRequest $request, ReceitaService $receitaService, int $id)
     {
-        $data = $request->validated();
-        $receita = Receita::find($id);
-        $receita->update($data);
-        return new ReceitaResource($receita);
+        return $receitaService->update($request, $id);
     }
 
-    public function destroy($id)
+    
+    public function destroy(int $id, ReceitaService $receitaService)
     {
-        $receita = Receita::find($id);
-        $receita->delete();
-        return response()->json(null, 204);
+        return $receitaService->destroy($id);
     }
 }

@@ -1,11 +1,9 @@
 <?php
 namespace App\Services;
 
-use App\Models\Pagamento;
 use App\Http\Resources\PagamentoResource;
 use App\Http\Requests\PagamentoRequest;
 use App\Repositories\PagamentoRepository;
-use Exception;
 
 class PagamentoService
 {

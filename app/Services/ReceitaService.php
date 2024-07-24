@@ -1,11 +1,9 @@
 <?php
 namespace App\Services;
 
-use App\Models\Receita;
 use App\Http\Resources\ReceitaResource;
 use App\Http\Requests\ReceitaRequest;
 use App\Repositories\ReceitaRepository;
-use Exception;
 
 class ReceitaService
 {

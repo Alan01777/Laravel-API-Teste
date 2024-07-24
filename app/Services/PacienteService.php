@@ -2,11 +2,9 @@
 
 namespace App\Services;
 
-use App\Models\Paciente;
 use App\Http\Resources\PacienteResource;
 use App\Http\Requests\PacienteRequest;
 use App\Repositories\PacienteRepository;
-use Exception;
 
 
 
@@ -73,7 +71,7 @@ class PacienteService
         }
     }
 
-    public function delete(int $id)
+    public function destroy(int $id)
     {
         try {
             $paciente = $this->pacienteRepository->delete($id);

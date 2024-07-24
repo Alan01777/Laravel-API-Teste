@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\Medico;
 use App\Http\Resources\MedicoResource;
 use App\Http\Requests\MedicoRequest;
 use App\Repositories\MedicoRepository;

@@ -3,44 +3,37 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\PagamentoResource;
 use App\Http\Requests\PagamentoRequest;
-use App\Models\Pagamento;
-use Illuminate\Http\Request;
+use App\Services\PagamentoService;
 
 class PagamentoController extends Controller
 {
-    public function index()
+    public function index(PagamentoService $PagamentoService)
     {
-        $pagamentos = Pagamento::with('consulta')->paginate(10);
-        return PagamentoResource::collection($pagamentos);
+        return $PagamentoService->index();
     }
 
-    public function store(PagamentoRequest $request)
+   
+    public function store(PagamentoRequest $request, PagamentoService $PagamentoService)
     {
-        $data = $request->validated();
-        $pagamento = Pagamento::create($data);
-        return new PagamentoResource($pagamento);
+        return $PagamentoService->store($request);
     }
 
-    public function show($id)
+    
+    public function show(PagamentoService $PagamentoService, int $id)
     {
-        $pagamento = Pagamento::with('consulta')->find($id);
-        return new PagamentoResource($pagamento);
+        return $PagamentoService->show($id);
     }
 
-    public function update(PagamentoRequest $request, $id)
+    
+    public function update(PagamentoRequest $request, PagamentoService $PagamentoService, int $id)
     {
-        $data = $request->validated();
-        $pagamento = Pagamento::find($id);
-        $pagamento->update($data);
-        return new PagamentoResource($pagamento);
+        return $PagamentoService->update($request, $id);
     }
 
-    public function destroy($id)
+    
+    public function destroy(int $id, PagamentoService $PagamentoService)
     {
-        $pagamento = Pagamento::find($id);
-        $pagamento->delete();
-        return response()->json(null, 204);
+        return $PagamentoService->destroy($id);
     }
 }

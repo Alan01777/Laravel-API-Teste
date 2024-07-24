@@ -1,11 +1,9 @@
 <?php
 namespace App\Services;
 
-use App\Models\Consulta;
 use App\Http\Resources\ConsultaResource;
 use App\Http\Requests\ConsultaRequest;
 use App\Repositories\ConsultaRepository;
-use Exception;
 
 
 class ConsultaService
