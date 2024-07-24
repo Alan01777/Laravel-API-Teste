@@ -1,3 +1,4 @@
+# This YAML file defines a GitHub Actions workflow named "Run Tests" that runs tests for a Laravel API project.
 name: Run Tests
 
 on:
