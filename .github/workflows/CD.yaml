@@ -1,3 +1,6 @@
+# This workflow is triggered when a push event occurs on the 'main' branch.
+# It builds and pushes a Docker image to Docker Hub.
+
 name: CD - Build and Push Image
 
 on:
@@ -45,4 +48,3 @@ jobs:
         run: |
           docker push alan01777/sistema-consultas-medicas:${{ env.short_sha }}
           docker push alan01777/sistema-consultas-medicas:latest
-
