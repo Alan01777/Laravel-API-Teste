@@ -16,9 +16,9 @@ class PacienteSeeder extends Seeder
         // $numeroPacientes = random_int(30, 60);
         // Paciente::factory()->count($numeroPacientes)->create();
 
-        $pacientes = Paciente::factory()->count(50000)->make();
+        $pacientes = Paciente::factory()->count(20)->make();
 
-        $chunks = $pacientes->chunk(1000);
+        $chunks = $pacientes->chunk(5);
 
         $chunks->each(function ($chunk) {
             Paciente::insert($chunk->toArray());

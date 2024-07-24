@@ -16,9 +16,9 @@ class MedicoSeeder extends Seeder
         // $numeroMedicos = random_int(5, 10);
         // Medico::factory()->count($numeroMedicos)->create();
 
-        $medicos = Medico::factory()->count(1500)->make();
+        $medicos = Medico::factory()->count(10)->make();
 
-        $chunks = $medicos->chunk(250);
+        $chunks = $medicos->chunk(5);
 
         $chunks->each(function ($chunk) {
             Medico::insert($chunk->toArray());
