@@ -12,14 +12,6 @@ jobs:
   test:
     name: Run Tests
     runs-on: ubuntu-latest
-    env:
-      DB_CONNECTION: ${{ secrets.SUPABASE_CONNECTION }}
-      DB_URL: ${{ secrets.SUPABASE_URL }}
-      DB_HOST: ${{ secrets.SUPABASE_HOST }}
-      DB_PORT: ${{ secrets.SUPABASE_PORT }}
-      DB_DATABASE: ${{ secrets.SUPABASE_DB }}
-      DB_USERNAME: ${{ secrets.SUPABASE_USER }}
-      DB_PASSWORD: ${{ secrets.SUPABASE_PASSWORD }}
     steps:
 
       - name: Checkout Code
@@ -35,5 +27,18 @@ jobs:
       - name: Install Dependencies
         run: composer install
 
+      - name: Prepare Laravel Application
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+
       - name: Run Tests
+        env:
+          DB_CONNECTION: ${{ secrets.SUPABASE_CONNECTION }}
+          DB_URL: ${{ secrets.SUPABASE_URL }}
+          DB_HOST: ${{ secrets.SUPABASE_HOST }}
+          DB_PORT: ${{ secrets.SUPABASE_PORT }}
+          DB_DATABASE: ${{ secrets.SUPABASE_DB }}
+          DB_USERNAME: ${{ secrets.SUPABASE_USER }}
+          DB_PASSWORD: ${{ secrets.SUPABASE_PASSWORD }}
         run: php artisan test
