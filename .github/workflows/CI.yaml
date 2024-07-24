@@ -1,9 +1,10 @@
+# This YAML file defines a GitHub Actions workflow for continuous integration (CI) to run tests on a Laravel application.
+# It specifies that the workflow should trigger on pull requests that are opened, synchronized, or reopened.
+# The workflow consists of a single job named "test" that runs on the latest version of Ubuntu.
+
 name: CI - Run Tests
 
 on:
-  push:
-    branches:
-      - main
   pull_request:
     types: [opened, synchronize, reopened]
 
@@ -12,6 +13,9 @@ jobs:
     name: Run Tests
     runs-on: ubuntu-latest
 
+    # Defines a service named "db" that runs a PostgreSQL database container.
+    # The container is based on the "postgres:12.19-alpine" image and exposes port 5432.
+    # It sets environment variables for the database connection and health checks.
     services:
       db:
         image: postgres:12.19-alpine
