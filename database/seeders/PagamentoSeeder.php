@@ -14,7 +14,7 @@ class PagamentoSeeder extends Seeder
      */
     public function run(): void
     {
-        Consulta::chunk(200, function ($consultas) {
+        Consulta::chunk(5, function ($consultas) {
             $pagamentos = [];
 
             foreach ($consultas as $consulta) {

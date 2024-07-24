@@ -14,7 +14,7 @@ class ReceitaSeeder extends Seeder
      */
     public function run(): void
     {
-       Consulta::chunk(200, function ($consultas) {
+       Consulta::chunk(5, function ($consultas) {
             $receitas = [];
 
             foreach($consultas as $consulta){

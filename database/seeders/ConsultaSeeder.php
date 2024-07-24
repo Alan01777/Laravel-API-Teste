@@ -17,7 +17,7 @@ class ConsultaSeeder extends Seeder
     {
         $medicos = Medico::all();
 
-        Paciente::chunk(200, function ($pacientes) use ($medicos) {
+        Paciente::chunk(5, function ($pacientes) use ($medicos) {
             $consultas = [];
 
             foreach ($pacientes as $paciente) {

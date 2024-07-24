@@ -1,0 +1,55 @@
+name: CI - Run Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  test:
+    name: Run Tests
+    runs-on: ubuntu-latest
+
+    services:
+      db:
+        image: postgres:12.19-alpine
+        env:
+          POSTGRES_USER: test
+          POSTGRES_PASSWORD: secret-test
+          POSTGRES_DB: test
+        ports:
+          - 5432:5432
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+      
+      - name: Setup PHP Action
+        uses: shivammathur/setup-php@2.31.1
+        with:
+          php-version: '8.3'
+          extensions: pdo, pdo_pgsql, zip
+          tools: composer:v2, php-cs-fixer, phpunit
+
+      - name: Install Dependencies
+        run: composer install
+
+      - name: Prepare Laravel Application
+        run: |
+          cp .env.example .env
+          php artisan key:generate
+  
+      - name: Run Tests
+        env:
+          DB_CONNECTION: pgsql
+          DB_HOST: 127.0.0.1
+          DB_PORT: 5432
+          DB_DATABASE: test
+          DB_USERNAME: test
+          DB_PASSWORD: secret-test
+        run: |
+          php artisan migrate --seed
+          php artisan test
