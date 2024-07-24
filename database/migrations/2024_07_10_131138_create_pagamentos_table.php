@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('pagamentos', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('consulta_id')->constrained('consultas');
+            $table->foreignId('consulta_id')->constrained('consultas')->onDelete('cascade');
             $table->double('valor')->nullable();
             $table->string('forma_pagamento')->nullable();
             $table->string('status')->default('pendente');

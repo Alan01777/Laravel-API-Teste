@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('receitas', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId('consulta_id')->constrained('consultas');
+            $table->foreignId('consulta_id')->constrained('consultas')->onDelete('cascade');
             $table->text('descricao');
             $table->date('data');
             $table->text('medicamentos');
