@@ -4,67 +4,47 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\PacienteRequest;
-use App\Models\Paciente;
-use Illuminate\Http\Request;
-use App\Http\Resources\PacienteResource;
+use App\Services\PacienteService;
 
 class PacienteController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(PacienteService $pacienteService)
     {
-        try {
-            $pacientes = Paciente::with('consultas')->paginate(100);
-
-            return PacienteResource::collection($pacientes);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Erro ao buscar pacientes',
-                'error' => $e->getMessage()
-            ], 500);
-        }
+        return $pacienteService->index();
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(PacienteRequest $request, Paciente $paciente)
+    public function store(PacienteRequest $request, PacienteService $pacienteService)
     {
-        $data = $request->validated();
-        $paciente = Paciente::create($data);
-
-        return new PacienteResource($paciente);
+        return $pacienteService->store($request);
     }
-
 
     /**
      * Display the specified resource.
      */
-    public function show(Paciente $paciente)
+    public function show(PacienteService $pacienteService, int $id)
     {
-        return new PacienteResource($paciente->load('consultas'));
+        return $pacienteService->show($id);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(PacienteRequest $request, Paciente $paciente)
+    public function update(PacienteRequest $request, PacienteService $pacienteService, int $id)
     {
-        $data = $request->validated();
-        $paciente->update($data);
-
-        return new PacienteResource($paciente);
+        return $pacienteService->update($request, $id);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Paciente $paciente)
+    public function destroy(int $id, PacienteService $pacienteService)
     {
-        $paciente->delete();
-
-        return response()->noContent();
+        return $pacienteService->delete($id);
     }
 }

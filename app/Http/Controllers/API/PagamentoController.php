@@ -10,61 +10,37 @@ use Illuminate\Http\Request;
 
 class PagamentoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        try {
-            $pagamentos = Pagamento::with('consulta')->paginate(100);
-
-            return PagamentoResource::collection($pagamentos);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Erro ao buscar pagamentos',
-                'error' => $e->getMessage()
-            ], 500);
-        }
+        $pagamentos = Pagamento::with('consulta')->paginate(10);
+        return PagamentoResource::collection($pagamentos);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(PagamentoRequest $request, Pagamento $pagamento)
+    public function store(PagamentoRequest $request)
     {
         $data = $request->validated();
         $pagamento = Pagamento::create($data);
-
         return new PagamentoResource($pagamento);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Pagamento $pagamento)
+    public function show($id)
     {
-        return new PagamentoResource($pagamento->load('consulta'));
+        $pagamento = Pagamento::with('consulta')->find($id);
+        return new PagamentoResource($pagamento);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(PagamentoRequest $request, Pagamento $pagamento)
+    public function update(PagamentoRequest $request, $id)
     {
         $data = $request->validated();
+        $pagamento = Pagamento::find($id);
         $pagamento->update($data);
-
         return new PagamentoResource($pagamento);
     }
 
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Pagamento $pagamento)
+    public function destroy($id)
     {
+        $pagamento = Pagamento::find($id);
         $pagamento->delete();
-
         return response()->json(null, 204);
     }
 }

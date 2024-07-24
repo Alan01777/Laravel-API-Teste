@@ -10,63 +10,37 @@ use App\Models\Consulta;
 
 class ConsultaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        try {
-            $Consulta = Consulta::with('medico', 'paciente')->paginate(100);
-
-            return ConsultaResource::collection($Consulta);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Erro ao buscar consultas',
-                'error' => $e->getMessage()
-            ], 500);
-        };
+        $consultas = Consulta::with('medico', 'paciente')->paginate(10);
+        return ConsultaResource::collection($consultas);
     }
 
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(ConsultaRequest $request, Consulta $consulta)
+    public function store(ConsultaRequest $request)
     {
         $data = $request->validated();
         $consulta = Consulta::create($data);
-
         return new ConsultaResource($consulta);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Consulta $consulta)
+    public function show($id)
     {
-        return new ConsultaResource($consulta->load('medico', 'paciente'));
+        $consulta = Consulta::with('medico', 'paciente')->find($id);
+        return new ConsultaResource($consulta);
     }
 
-
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(ConsultaRequest $request, Consulta $consulta)
+    public function update(ConsultaRequest $request, $id)
     {
         $data = $request->validated();
+        $consulta = Consulta::find($id);
         $consulta->update($data);
-
         return new ConsultaResource($consulta);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Consulta $consulta)
+    public function destroy($id)
     {
+        $consulta = Consulta::find($id);
         $consulta->delete();
-
         return response()->json(null, 204);
     }
 }

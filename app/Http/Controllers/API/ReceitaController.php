@@ -10,60 +10,37 @@ use App\Http\Requests\ReceitaRequest;
 
 class ReceitaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index()
     {
-        try {
-            $receitas = Receita::with('consulta')->paginate(100);
-
-            return ReceitaResource::collection($receitas);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Erro ao buscar receitas',
-                'error' => $e->getMessage()
-            ], 500);
-        }
+        $receitas = Receita::with('consulta')->paginate(10);
+        return ReceitaResource::collection($receitas);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(ReceitaRequest $request, Receita $receita)
+    public function store(ReceitaRequest $request)
     {
         $data = $request->validated();
         $receita = Receita::create($data);
-
         return new ReceitaResource($receita);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Receita $receita)
+    public function show($id)
     {
-        return new ReceitaResource($receita->load('consulta'));
+        $receita = Receita::with('consulta')->find($id);
+        return new ReceitaResource($receita);
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(ReceitaRequest $request, Receita $receita)
+    public function update(ReceitaRequest $request, $id)
     {
         $data = $request->validated();
+        $receita = Receita::find($id);
         $receita->update($data);
-
         return new ReceitaResource($receita);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Receita $receita)
+    public function destroy($id)
     {
+        $receita = Receita::find($id);
         $receita->delete();
-
-        return response()->noContent();
+        return response()->json(null, 204);
     }
 }
