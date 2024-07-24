@@ -32,15 +32,13 @@ jobs:
           cp .env.example .env
           php artisan key:generate
 
-
-
       - name: Run Tests
         run: |
-          echo "DB_CONNECTION=${{ secrets.SUPABASE_CONNECTION }}" >> .env
-          echo "DB_URL=${{ secrets.SUPABASE_URL }}" >> .env
-          echo "DB_HOST=${{ secrets.SUPABASE_HOST }}" >> .env
-          echo "DB_PORT=${{ secrets.SUPABASE_PORT }}" >> .env
-          echo "DB_DATABASE=${{ secrets.SUPABASE_DB }}" >> .env
-          echo "DB_USERNAME=${{ secrets.SUPABASE_USER }}" >> .env
-          echo "DB_PASSWORD=${{ secrets.SUPABASE_PASSWORD }}" >> .env
+          echo "DB_CONNECTION=pgsql" >> .env
+          echo "DB_URL=postgresql://postgres.xadtqkvxwpbuauxeoell:wow01777121518@aws-0-sa-east-1.pooler.supabase.com:6543/postgres" >> .env
+          echo "DB_HOST=aws-0-sa-east-1.pooler.supabase.com" >> .env
+          echo "DB_PORT=6543" >> .env
+          echo "DB_DATABASE=postgres" >> .env
+          echo "DB_USERNAME=postgres.xadtqkvxwpbuauxeoell" >> .env
+          echo "DB_PASSWORD=wow01777121518" >> .env
           php artisan test
