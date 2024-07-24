@@ -34,11 +34,10 @@ jobs:
 
       - name: Run Tests
         env:
-          DB_CONNECTION: pgsql
-          DB_URL: postgresql://postgres.xadtqkvxwpbuauxeoell:wow01777121518@aws-0-sa-east-1.pooler.supabase.com:6543/postgres
-          DB_HOST: aws-0-sa-east-1.pooler.supabase.com
-          DB_PORT: 6543
-          DB_DATABASE: postgres
-          DB_USERNAME: postgres.xadtqkvxwpbuauxeoell
-          DB_PASSWORD: wow01777121518
+          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
+          DB_URL: ${{ secrets.DB_URL }}
+          DB_PORT: ${{ secrets.DB_PORT }}
+          DB_DATABASE: ${{ secrets.DB_DATABASE }}
+          DB_USERNAME: ${{ secrets.DB_USERNAME }}
+          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
         run: php artisan test
