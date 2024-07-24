@@ -33,12 +33,12 @@ jobs:
           php artisan key:generate
 
       - name: Run Tests
-        run: |
-          echo "DB_CONNECTION=pgsql" >> .env
-          echo "DB_URL=postgresql://postgres.xadtqkvxwpbuauxeoell:wow01777121518@aws-0-sa-east-1.pooler.supabase.com:6543/postgres" >> .env
-          echo "DB_HOST=aws-0-sa-east-1.pooler.supabase.com" >> .env
-          echo "DB_PORT=6543" >> .env
-          echo "DB_DATABASE=postgres" >> .env
-          echo "DB_USERNAME=postgres.xadtqkvxwpbuauxeoell" >> .env
-          echo "DB_PASSWORD=wow01777121518" >> .env
-          php artisan test
+        env:
+          DB_CONNECTION: pgsql
+          DB_URL: postgresql://postgres.xadtqkvxwpbuauxeoell:wow01777121518@aws-0-sa-east-1.pooler.supabase.com:6543/postgres
+          DB_HOST: aws-0-sa-east-1.pooler.supabase.com
+          DB_PORT: 6543
+          DB_DATABASE: postgres
+          DB_USERNAME: postgres.xadtqkvxwpbuauxeoell
+          DB_PASSWORD: wow01777121518
+        run: php artisan test
