@@ -31,6 +31,11 @@ jobs:
         run: |
           cp .env.example .env
           php artisan key:generate
+
+
+
+      - name: Run Tests
+        run: |
           echo "DB_CONNECTION=${{ secrets.SUPABASE_CONNECTION }}" >> .env
           echo "DB_URL=${{ secrets.SUPABASE_URL }}" >> .env
           echo "DB_HOST=${{ secrets.SUPABASE_HOST }}" >> .env
@@ -38,15 +43,4 @@ jobs:
           echo "DB_DATABASE=${{ secrets.SUPABASE_DB }}" >> .env
           echo "DB_USERNAME=${{ secrets.SUPABASE_USER }}" >> .env
           echo "DB_PASSWORD=${{ secrets.SUPABASE_PASSWORD }}" >> .env
-
-
-      - name: Run Tests
-        env:
-          DB_CONNECTION: ${{ secrets.SUPABASE_CONNECTION }}
-          DB_URL: ${{ secrets.SUPABASE_URL }}
-          DB_HOST: ${{ secrets.SUPABASE_HOST }}
-          DB_PORT: ${{ secrets.SUPABASE_PORT }}
-          DB_DATABASE: ${{ secrets.SUPABASE_DB }}
-          DB_USERNAME: ${{ secrets.SUPABASE_USER }}
-          DB_PASSWORD: ${{ secrets.SUPABASE_PASSWORD }}
-        run: php artisan test
+          php artisan test
