@@ -31,19 +31,7 @@ jobs:
         run: |
           cp .env.example .env
           php artisan key:generate
-
-      - name: "check is MY_SECRET exists"
-        env: 
-          DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
-          DB_URL: ${{ secrets.DB_URL }}
-          DB_PORT: ${{ secrets.DB_PORT }}
-          DB_DATABASE: ${{ secrets.DB_DATABASE }}
-          DB_USERNAME: ${{ secrets.DB_USERNAME }}
-          DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        if: ${{ secrets.DB_CONNECTION == '' || secrets.DB_URL == '' || secrets.DB_PORT == '' || secrets.DB_DATABASE == '' || secrets.DB_USERNAME == '' || secrets.DB_PASSWORD == '' }}
-        run: echo "Please set all the secrets"
-
-
+  
       - name: Run Tests
         env:
           DB_CONNECTION: ${{ secrets.DB_CONNECTION }}
@@ -52,11 +40,4 @@ jobs:
           DB_DATABASE: ${{ secrets.DB_DATABASE }}
           DB_USERNAME: ${{ secrets.DB_USERNAME }}
           DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        run: |
-          echo $DB_CONNECTION
-          echo $DB_URL
-          echo $DB_PORT
-          echo $DB_DATABASE
-          echo $DB_USERNAME
-          echo $DB_PASSWORD
-          php artisan test
+        run: php artisan test
