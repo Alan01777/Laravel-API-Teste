@@ -73,9 +73,7 @@ class MedicoService
     {
         try {
             $this->medicoRepository->delete($id);
-            return response()->json([
-                'message' => 'Medico deletado com sucesso'
-            ]);
+            return response()->json(null, 204);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Erro ao deletar medico',

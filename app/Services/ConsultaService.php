@@ -74,9 +74,7 @@ class ConsultaService
         try {
             $consulta = $this->consultaRepository->find($id);
             $consulta->delete();
-            return response()->json([
-                'message' => 'Consulta deletada com sucesso'
-            ], 200);
+            return response()->json(null, 204);
         } catch (\Exception $e) {
             return response()->json([
                 'message' => 'Erro ao deletar consulta',
