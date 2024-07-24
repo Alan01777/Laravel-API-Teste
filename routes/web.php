@@ -11,4 +11,6 @@ Route::get('/redis', function () {
     return $value; // Should return 'Hello, Redis!'
 });
 
+
+
 require __DIR__ . '/auth.php';

@@ -8,9 +8,14 @@ use App\Http\Controllers\API\ConsultaController;
 use App\Http\Controllers\API\ReceitaController;
 use App\Http\Controllers\API\PagamentoController;
 
-
 Route::apiResource('pacientes', PacienteController::class);
 Route::apiResource('medicos', MedicoController::class);
 Route::apiResource('consultas', ConsultaController::class);
 Route::apiResource('receitas', ReceitaController::class);
 Route::apiResource('pagamentos', PagamentoController::class);
+
+Route::post('/tokens/create', function (Request $request) {
+    $token = $request->user()->createToken($request->token_name);
+
+    return ['token' => $token->plainTextToken];
+});
