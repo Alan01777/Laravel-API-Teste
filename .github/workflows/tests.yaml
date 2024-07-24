@@ -31,7 +31,14 @@ jobs:
         run: |
           cp .env.example .env
           php artisan key:generate
-          php artisan migrate
+          echo "DB_CONNECTION=${{ secrets.SUPABASE_CONNECTION }}" >> .env
+          echo "DB_URL=${{ secrets.SUPABASE_URL }}" >> .env
+          echo "DB_HOST=${{ secrets.SUPABASE_HOST }}" >> .env
+          echo "DB_PORT=${{ secrets.SUPABASE_PORT }}" >> .env
+          echo "DB_DATABASE=${{ secrets.SUPABASE_DB }}" >> .env
+          echo "DB_USERNAME=${{ secrets.SUPABASE_USER }}" >> .env
+          echo "DB_PASSWORD=${{ secrets.SUPABASE_PASSWORD }}" >> .env
+
 
       - name: Run Tests
         env:
