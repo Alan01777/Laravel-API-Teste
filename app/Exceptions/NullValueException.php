@@ -12,7 +12,7 @@ class NullValueException extends Exception
         parent::__construct($message, $code, $previous);
     }
 
-    public function render($request)
+    public function render()
     {
         return response()->json([
             'error' => $this->getMessage(),
