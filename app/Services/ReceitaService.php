@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Services;
 
 use App\Http\Resources\ReceitaResource;
@@ -16,68 +17,33 @@ class ReceitaService
 
     public function index()
     {
-        try {
-            $receitas = $this->receitaRepository->findAll();
-            return ReceitaResource::collection($receitas);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Erro ao buscar receitas',
-                'error' => $e->getMessage()
-            ], 500);
-        }
+        $receitas = $this->receitaRepository->findAll();
+        return ReceitaResource::collection($receitas);
     }
 
     public function store(ReceitaRequest $request)
     {
-        try {
-            $data = $request->validated();
-            $receita = $this->receitaRepository->create($data);
-            return new ReceitaResource($receita);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Erro ao criar receita',
-                'error' => $e->getMessage()
-            ], 500);
-        }
+        $data = $request->validated();
+        $receita = $this->receitaRepository->create($data);
+        return new ReceitaResource($receita);
     }
 
     public function show(int $id)
     {
-        try {
-            $receita = $this->receitaRepository->find($id);
-            return new ReceitaResource($receita);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Erro ao buscar receita',
-                'error' => $e->getMessage()
-            ], 500);
-        }
+        $receita = $this->receitaRepository->find($id);
+        return new ReceitaResource($receita);
     }
     
     public function update(ReceitaRequest $request, int $id)
     {
-        try {
-            $data = $request->validated();
-            $receita = $this->receitaRepository->update($id, $data);
-            return new ReceitaResource($receita);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Erro ao atualizar receita',
-                'error' => $e->getMessage()
-            ], 500);
-        }
+        $data = $request->validated();
+        $receita = $this->receitaRepository->update($id, $data);
+        return new ReceitaResource($receita);
     }
-    
+
     public function destroy(int $id)
     {
-        try {
-            $this->receitaRepository->delete($id);
-            return response()->json(null, 204);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Erro ao deletar receita',
-                'error' => $e->getMessage()
-            ], 500);
-        }
+        $this->receitaRepository->delete($id);
+        return response()->json(null, 204);
     }
 }

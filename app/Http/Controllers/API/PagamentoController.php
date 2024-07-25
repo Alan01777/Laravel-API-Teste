@@ -11,60 +11,60 @@ class PagamentoController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @param  \App\Services\PagamentoService  $PagamentoService
+     * @param  \App\Services\PagamentoService  $pagamentoService
      * @return \Illuminate\Http\Response
      */
-    public function index(PagamentoService $PagamentoService)
+    public function index(PagamentoService $pagamentoService)
     {
-        return $PagamentoService->index();
+        return $pagamentoService->index();
     }
 
     /**
      * Store a newly created resource in storage.
      *
      * @param  \App\Http\Requests\PagamentoRequest  $request
-     * @param  \App\Services\PagamentoService  $PagamentoService
+     * @param  \App\Services\PagamentoService  $pagamentoService
      * @return \Illuminate\Http\Response
      */
-    public function store(PagamentoRequest $request, PagamentoService $PagamentoService)
+    public function store(PagamentoRequest $request, PagamentoService $pagamentoService)
     {
-        return $PagamentoService->store($request);
+        return $pagamentoService->store($request);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Services\PagamentoService  $PagamentoService
+     * @param  \App\Services\PagamentoService  $pagamentoService
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(PagamentoService $PagamentoService, int $id)
+    public function show(PagamentoService $pagamentoService, int $id)
     {
-        return $PagamentoService->show($id);
+        return $pagamentoService->show($id);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \App\Http\Requests\PagamentoRequest  $request
-     * @param  \App\Services\PagamentoService  $PagamentoService
+     * @param  \App\Services\PagamentoService  $pagamentoService
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(PagamentoRequest $request, PagamentoService $PagamentoService, int $id)
+    public function update(PagamentoRequest $request, PagamentoService $pagamentoService, int $id)
     {
-        return $PagamentoService->update($request, $id);
+        return $pagamentoService->update($request, $id);
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @param  \App\Services\PagamentoService  $PagamentoService
+     * @param  \App\Services\PagamentoService  $pagamentoService
      * @return \Illuminate\Http\Response
      */
-    public function destroy(int $id, PagamentoService $PagamentoService)
+    public function destroy(int $id, PagamentoService $pagamentoService)
     {
-        return $PagamentoService->destroy($id);
+        return $pagamentoService->destroy($id);
     }
 }

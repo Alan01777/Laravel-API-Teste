@@ -1,10 +1,13 @@
 <?php
+
 namespace App\Repositories;
 
 use App\Models\Consulta;
+use App\Http\Requests\ConsultaRequest;
 use App\Repositories\Contracts\RepositoryInterface;
+use App\Exceptions\NullValueException;
+use App\Exceptions\InvalidRequestBody;
 use Exception;
-
 
 class ConsultaRepository implements RepositoryInterface
 {
@@ -17,66 +20,37 @@ class ConsultaRepository implements RepositoryInterface
 
     public function findAll()
     {
-        try {
-            return $this->consulta->with('medico', 'paciente')->paginate(10);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Erro ao buscar consultas',
-                'error' => $e->getMessage()
-            ], 500);
+        $consultas = $this->consulta->with('medico', 'paciente')->paginate(10);
+        if ($consultas->total() === 0) {
+            throw new NullValueException('No consulta found');
         }
+        return $consultas;
     }
 
     public function create($data)
     {
-        try {
-            return $this->consulta->create($data);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Erro ao criar consulta',
-                'error' => $e->getMessage()
-            ], 500);
-        }
+        return $this->consulta->create($data);
     }
 
     public function find($id)
     {
-        try {
-            $consulta = $this->consulta->find($id);
-            if ($consulta === null) {
-                throw new Exception('No consulta found with id: ' . $id);
-            }
-            return $consulta;
-        } catch (Exception $e) {
-            throw new Exception('Error fetching consulta: ' . $e->getMessage());
+        $consulta = $this->consulta->find($id);
+        if ($consulta === null) {
+            throw new NullValueException('No consulta found with id: ' . $id);
         }
+        return $consulta;
     }
 
     public function update($id, $data)
     {
-        try {
-            $consulta = $this->find($id);
-            $consulta->update($data);
-            return $consulta;
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Erro ao atualizar consulta',
-                'error' => $e->getMessage()
-            ], 500);
-        }
+        $consulta = $this->find($id);
+        $consulta->update($data);
+        return $consulta;
     }
 
     public function delete($id)
     {
-        try {
-            $consulta = $this->find($id);
-            $consulta->delete();
-            return $consulta;
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Erro ao deletar consulta',
-                'error' => $e->getMessage()
-            ], 500);
-        }
+        $consulta = $this->find($id);
+        $consulta->delete();
     }
 }
