@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Feature\API;
+namespace Tests\Unit;
 
 use App\Http\Controllers\API\ConsultaController;
 use App\Http\Requests\ConsultaRequest;
