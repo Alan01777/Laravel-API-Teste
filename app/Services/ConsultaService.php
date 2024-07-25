@@ -22,7 +22,7 @@ class ConsultaService
 
     public function store(ConsultaRequest $request)
     {
-        $data = $request->validated();        
+        $data = $request->validated();
         $consulta = $this->consultaRepository->create($data);
         return new ConsultaResource($consulta);
     }
