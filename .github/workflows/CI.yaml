@@ -37,9 +37,10 @@ jobs:
           php-version: '8.3'
           extensions: pdo, pdo_pgsql, zip
           tools: composer:v2, php-cs-fixer, phpunit
+          coverage: xdebug
 
-      - name: Install Dependencies
-        run: composer install
+      - name: Install dependencies with composer
+        run: composer update --no-ansi --no-interaction --no-progress
 
       - name: Prepare Laravel Application
         run: |
@@ -56,4 +57,4 @@ jobs:
           DB_PASSWORD: secret-test
         run: |
           php artisan migrate --seed
-          php artisan test
+          vendor/bin/phpunit --coverage-clover=coverage.xml
