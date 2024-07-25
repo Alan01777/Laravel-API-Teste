@@ -3,85 +3,51 @@
 namespace App\Repositories;
 
 use App\Models\Paciente;
-use App\Repositories\Contracts\RepositoryInterface;
-use Exception;
+use App\Exceptions\NullValueException;
+use \Exception;
 
-class PacienteRepository implements RepositoryInterface
+class PacienteRepository
 {
-    private $paciente;
+    protected $paciente;
 
     public function __construct(Paciente $paciente)
     {
         $this->paciente = $paciente;
     }
-    
+
     public function findAll()
     {
-        try {
-            return $this->paciente->with('consultas')->paginate(10);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Erro ao buscar pacientes',
-                'error' => $e->getMessage()
-            ], 500);
+        $pacientes = $this->paciente->paginate(15);
+        if ($pacientes->total() === 0) {
+            throw new NullValueException('No paciente found');
         }
+        return $pacientes;
     }
 
-    public function create($data)
+    public function create(array $data)
     {
-        try {
-            return $this->paciente->create($data);
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Erro ao criar paciente',
-                'error' => $e->getMessage()
-            ], 500);
-        }
+        return $this->paciente->create($data);
     }
 
     public function find(int $id)
     {
-        try {
-            $paciente = $this->paciente->find($id);
-            if ($paciente === null) {
-                throw new Exception('No patient found with id: ' . $id);
-            }
-            return $paciente;
-        } catch (Exception $e) {
-            throw new Exception('Error fetching patient: ' . $e->getMessage());
+        $paciente = $this->paciente->find($id);
+        if ($paciente === null) {
+            throw new NullValueException('No patient found with id: ' . $id);
         }
+        return $paciente;
     }
 
-    public function update($id, $data)
+    public function update(int $id, array $data)
     {
-        try {
-            $paciente = $this->find($id);
-            $paciente->update($data);
-            return $paciente;
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Erro ao atualizar paciente',
-                'error' => $e->getMessage()
-            ], 500);
-        }
+        $paciente = $this->find($id);
+        $paciente->update($data);
+        return $paciente;
     }
 
-    public function delete($id)
+    public function delete(int $id)
     {
-        try {
-            $paciente = $this->find($id);
-            if ($paciente) {
-                // Delete the consultas records that reference this paciente
-                $paciente->consultas()->delete();
-                // Now delete the paciente
-                return $paciente->delete();
-            }
-            return null;
-        } catch (\Exception $e) {
-            return response()->json([
-                'message' => 'Erro ao deletar paciente',
-                'error' => $e->getMessage()
-            ], 500);
-        }
+        $paciente = $this->find($id);
+        $paciente->delete();
     }
 }

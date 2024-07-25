@@ -6,6 +6,7 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class MedicoRequest extends FormRequest
 {
+    const RULE = 'required|string|max:255';
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -21,12 +22,14 @@ class MedicoRequest extends FormRequest
      */
     public function rules(): array
     {
+        
+        
         return [
-            'nome' => 'required|string|max:255',
+            'nome' => self::RULE,
             'email' => 'required|string|email|max:255',
-            'telefone' => 'required|string|max:255',
-            'crm' => 'required|string|max:255',
-            'especialidade' => 'required|string|max:255',
+            'telefone' => self::RULE,
+            'crm' => self::RULE,
+            'especialidade' => self::RULE,
             'data_nascimento' => 'required|date',
             'sexo' => 'required|string|max:1',
         ];
