@@ -8,6 +8,14 @@ use App\Http\Controllers\API\ConsultaController;
 use App\Http\Controllers\API\ReceitaController;
 use App\Http\Controllers\API\PagamentoController;
 
+
+Route::get('/user', function (Request $request) {
+    return $request->user();
+})->middleware('auth:sanctum');
+
+
+
+
 Route::apiResource('pacientes', PacienteController::class);
 Route::apiResource('medicos', MedicoController::class);
 Route::apiResource('consultas', ConsultaController::class);
