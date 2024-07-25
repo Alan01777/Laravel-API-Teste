@@ -54,4 +54,3 @@ class ConsultaRepository implements RepositoryInterface
         $consulta->delete();
     }
 }
-
